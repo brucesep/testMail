@@ -4,8 +4,10 @@ package testing;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -33,7 +35,7 @@ public class MailingTest {
 
     @Test
     public void logOn() {
-        helpMeth.logIn("test.aleksey01", "testpp00--213");
+        helpMeth.logIn("test.aleksey01", "testpp00--123");
         helpMeth.checkingMail("test.aleksey01@gmail.com", "тестовое письмо", "текст письма для проверки");
         helpMeth.loggingOut();
     }

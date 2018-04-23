@@ -9,17 +9,14 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.io.IOException;
-import java.sql.Driver;
-import java.util.List;
 
 /**
  * Created by alexeya on 19.04.2018.
  */
-
 
 
 public class HelpMeth {
@@ -50,19 +47,26 @@ public class HelpMeth {
     WebElement chooseLetter;
 
 
-    public HelpMeth(WebDriver driver){
+    public HelpMeth(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
 
     }
+
     public void logIn(String login, String pass) {
         logIn.clear();
         logIn.sendKeys(login);
         password.clear();
         password.sendKeys(pass);
         entering.click();
+        try {
+            logOut.isDisplayed();
+        } catch (WebDriverException e) {
+            System.out.println("ENTER FAILED!!! CHECK LOGINNAME AND/OR PASSWOED");
+        }
     }
-    public  void checkingMail(String author, String theme, String bodyLetter){
+
+    public void checkingMail(String author, String theme, String bodyLetter) {
         search.click();
         search.sendKeys(author);
         searchGo.click();
@@ -74,7 +78,8 @@ public class HelpMeth {
         Assert.assertEquals(theme, themeLetter);
         Assert.assertEquals(bodyLetter, bodyLet);
     }
-    public  void loggingOut(){
+
+    public void loggingOut() {
         logOut.click();
         fullOut.click();
     }
