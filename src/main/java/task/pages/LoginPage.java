@@ -27,7 +27,7 @@ public class LoginPage {
     public static WebElement password;
     @FindBy(css = ".mail-Logo-Service.ns-action")
     public static  WebElement postPage;
-    @FindBy(css = ".mail-User-Avatar.mail-User-Avatar_size_42 mail-User-Avatar_header.js-user-picture")
+    @FindBy(css = ".mail-User-Avatar.mail-User-Avatar_size_42.mail-User-Avatar_header.js-user-picture")
     public static WebElement menuButton;
     @FindBy(linkText = "Выйти из сервисов Яндекса")
     public static WebElement logOutButton;
@@ -49,6 +49,7 @@ public class LoginPage {
         logIn.clear();
         logIn.sendKeys(loginName);
         enterButtonLogin.click();
+        explicitWait = (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOf(password));
         try{
             password.isDisplayed();
         } catch (WebDriverException e){

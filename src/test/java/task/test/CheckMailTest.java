@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import task.pages.LoginPage;
@@ -42,10 +41,6 @@ public class CheckMailTest {
             System.out.println("Enter failed! Wrong password or login!");
         }
         mailPage.checkMail("test.aleksey01@gmail.com", "тестовое письмо", "текст письма для проверки");
-    }
-
-    @AfterTest
-    public void logginOut(){
         loginPage.logOut();
     }
 

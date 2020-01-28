@@ -1,11 +1,11 @@
 package task.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -23,10 +23,15 @@ public class MailPage {
     public static WebElement searchGo;
     @FindBy(css = ".mail-MessageSnippet-FromText")
     public static WebElement authorChek;
+//    @FindBy(css = ".mail-MessageSnippet-Item.mail-MessageSnippet-Item_sender.js-message-snippet-sender")
+//    public static WebElement mailbox;
     @FindBy(css = ".mail-MessageSnippet-Item.mail-MessageSnippet-Item_subject")
     public static WebElement themeCheck;
-    @FindBy(css = ".mail-MessageSnippet-Item.mail-MessageSnippet-Item_firstline js-message-snippet-firstline")
+    @FindBy(css = ".mail-MessageSnippet-Item.mail-MessageSnippet-Item_firstline.js-message-snippet-firstline")
     public static WebElement bodyCheck;
+    @FindBy(css = ".mail-MessagesSearchInfo.js-messages-header")
+    public static WebElement searchresults;
+
 
 
     public MailPage(WebDriver driver){
@@ -35,20 +40,35 @@ public class MailPage {
     }
 
     public void checkMail(String author, String theme, String bodyLetter){
+        //WebElement explicitwait = (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOf(search));
         search.click();
         search.sendKeys(author);
         searchGo.click();
+        WebElement explicitwait = (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOf(searchresults));
         try{
-            driver.findElement(By.linkText(theme)).isDisplayed();
+            Assert.assertEquals((authorChek.getAttribute("title")), author);
         } catch (WebDriverException e){
             System.out.println("No matches found!");
         }
         String mailUser = authorChek.getAttribute("title");
         String themeLetter = themeCheck.getText();
         String bodyLet = bodyCheck.getText();
-        Assert.assertEquals(author, mailUser);
-        Assert.assertEquals(theme, themeLetter);
-        Assert.assertEquals(bodyLetter, bodyLet);
+        try{
+            Assert.assertEquals(author, mailUser);
+        } catch (WebDriverException exc1){
+            System.out.println("No matches in author!");
+        }
+        try {
+            Assert.assertEquals(theme, themeLetter);
+        } catch (WebDriverException exc2){
+            System.out.println("No matches in theme!");
+        }
+        try{
+            Assert.assertEquals(bodyLetter, bodyLet);
+        } catch (WebDriverException exc3){
+            System.out.println("No matches in bodyletter!");
+        }
+
     }
 
 }
